@@ -632,6 +632,9 @@ Api::IoCallUint64Result Utility::readFromSocket(IoHandle& handle,
       Buffer::RawSlice* slice = slices[i].data();
       const uint64_t msg_len = output.msg_[i].msg_len_;
       ASSERT(msg_len <= slice->len_);
+      if (msg_len == 0) {
+        continue;
+      }
       ENVOY_LOG_MISC(debug, "Receive a packet with {} bytes from {}", msg_len,
                      output.msg_[i].peer_address_->asString());
 
